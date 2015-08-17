@@ -11,6 +11,7 @@ PDFFILES = $(NOTEBOOKS:.ipynb=.pdf)
 
 # Pattern rule for generating tex file from ipython notebook
 %.tex : %.ipynb
+	runipy $<
 	$(IPYTHON) nbconvert --to=latex $<
 
 all: buildpdf
