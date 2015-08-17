@@ -1,25 +1,33 @@
 #
 # Build a PDF with all the notebooks 
 #
-.ipynb.tex:
-	ipython nbconvert --to latex  $<
+# Modify as appropriate to get correct ipython executable
+IPYTHON := $(shell which ipython)
+PDFLATEX := $(shell which pdflatex)
 
-all: latexfiles strip buildpdf
+NOTEBOOKS = $(wildcard *.ipynb)
+LATEXFILES = $(NOTEBOOKS:.ipynb=.tex)
+PDFFILES = $(NOTEBOOKS:.ipynb=.pdf)
 
-latexfiles:
-	ipython nbconvert --to latex Lecture-0-Scientific-Computing-with-Python.ipynb
-	ipython nbconvert --to latex Lecture-1-Introduction-to-Python-Programming.ipynb
-	ipython nbconvert --to latex Lecture-2-Numpy.ipynb 
-	ipython nbconvert --to latex Lecture-3-Scipy.ipynb
-	ipython nbconvert --to latex Lecture-4-Matplotlib.ipynb
-	ipython nbconvert --to latex Lecture-5-Sympy.ipynb
-	ipython nbconvert --to latex Lecture-6A-Fortran-and-C.ipynb
-	ipython nbconvert --to latex Lecture-6B-HPC.ipynb
-	ipython nbconvert --to latex Lecture-7-Revision-Control-Software.ipynb
+# Pattern rule for generating tex file from ipython notebook
+%.tex : %.ipynb
+	$(IPYTHON) nbconvert --to=latex $<
 
-strip:
+all: buildpdf
+
+strip: $(LATEXFILES)
 	./strip-preambles.py
 
-buildpdf: latexfiles
-	pdflatex Scientific-Computing-with-Python.tex
-    
+# First pass with pdflatex builds body with references for Table of Contents (TOC)
+toc: strip
+	$(PDFLATEX) Scientific-Computing-with-Python.tex
+
+# Second pass with pdflatec builds actual pdf with TOC
+buildpdf: toc
+	$(PDFLATEX) Scientific-Computing-with-Python.tex
+
+clean:
+	rm -f *.toc *.aux *.log *.out $(LATEXFILES) Scientific-Computing-with-Python.tex
+
+clobber: clean
+	rm -f Scientific-Computing-with-Python.pdf 

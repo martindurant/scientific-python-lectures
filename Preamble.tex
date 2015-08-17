@@ -17,6 +17,18 @@
 \usepackage{scrextend}
 \usepackage{needspace}
 \usepackage{framed}
+\usepackage{textcomp}
+% To insert logo in chapter headings
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+ {\includegraphics{./images/Continuum_Logo_0702.png}%
+ %\rule{1in}{1in}% (to auto-insert graphic use) \includegraphics{\chaptername-\thechapter-graphic}
+  \normalfont\huge\bfseries}
+  {\\\chaptertitlename\ \thechapter\\}
+  {0pt}
+  {\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
 \adjustboxset{max width=0.9\textwidth}
 
 \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
@@ -48,6 +60,8 @@
 
 % commands and environments needed by pandoc snippets
 % extracted from the output of `pandoc -s`
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
 % Add ',fontsize=\small' for more characters per line
 \newenvironment{Shaded}{}{}
@@ -66,10 +80,14 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
 
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
 \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
 \def\gt{>}
 \def\lt{<}
 \makeatletter
+    % Pygments definitions
 \def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
 \let\PY@ul=\relax \let\PY@tc=\relax%
 \let\PY@bc=\relax \let\PY@ff=\relax}
@@ -167,6 +185,9 @@
 \definecolor{nbframe-bg}{rgb}{0.969,0.969,0.969}
 \definecolor{nbframe-in-prompt}{rgb}{0.0,0.0,0.502}
 \definecolor{nbframe-out-prompt}{rgb}{0.545,0.0,0.0}
+% Exact colors from NB
+\definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+\definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
 
 % NB prompt lengths
 \newlength{\inputpadding}
