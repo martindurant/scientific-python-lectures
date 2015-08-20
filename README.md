@@ -12,5 +12,5 @@ This will open a new page in your browser with a list of the available notebooks
 Online read-only versions
 =========================
 
-A PDF file containing all the lectures is available here: [Scientific Computing with Python](https://github.com/ContinuumIO/scientific-python-lectures/blob/New-branding/Scientific-Computing-with-Python.pdf)
+A PDF file containing all the lectures is available here: [Scientific Computing with Python](https://github.com/ContinuumIO/scientific-python-lectures/blob/master/Scientific-Computing-with-Python.pdf)
 
